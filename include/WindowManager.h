@@ -10,7 +10,7 @@
  * Initializes GLFW
  * Creates a full-screen OpenGL window
  * Initializes GLEW
- * Returns false if an error occurred
+ * Returns a pointer to the GLFWwindow object, or null if an error occurred
  */
 GLFWwindow* initWindow();
 

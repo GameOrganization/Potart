@@ -15,7 +15,7 @@ GLFWwindow* initWindow()
     //Set the error callback for GLFW
     glfwSetErrorCallback(error);
 
-    //If GLFW fails to initialize, return false
+    //If GLFW fails to initialize, return null
     if (!glfwInit())
         return NULL;
 
@@ -25,18 +25,18 @@ GLFWwindow* initWindow()
     const GLFWvidmode* display = glfwGetVideoMode(monitor);
     GLFWwindow* window = glfwCreateWindow(display->width, display->height, WINDOW_TITLE, monitor, NULL);
 
-    //If window is null, return false
+    //If window is null, return null
     if (!window)
         return NULL;
 
     //Make the window the current OpenGL context
     glfwMakeContextCurrent(window);
 
-    //Attempt to initialize GLEW, if an error occurred, return false
+    //Attempt to initialize GLEW, if an error occurred, return null
     if (glewInit() != GLEW_OK)
         return NULL;
 
-    //Return true since no error occurred
+    //Return the window since no error occurred
     return window;
 }
 
