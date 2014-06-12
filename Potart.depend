@@ -1,0 +1,32 @@
+# depslib dependency file v1.0
+1402602006 source:d:\github\potart\src\main.cpp
+	"WindowManager.h"
+
+1402601798 d:\github\potart\include\windowmanager.h
+	"GL/glew.h"
+	"GLFW/glfw3.h"
+
+1374502400 d:\github\potart\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1388520873 d:\github\potart\include\glfw\glfw3.h
+	<stddef.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<GLES3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1402602033 source:d:\github\potart\src\windowmanager.cpp
+	"WindowManager.h"
+	<iostream>
+
