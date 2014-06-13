@@ -1,6 +1,6 @@
 # depslib dependency file v1.0
-1402602006 source:d:\github\potart\src\main.cpp
-	"WindowManager.h"
+1402690956 source:d:\github\potart\src\main.cpp
+	"Window.h"
 
 1402601798 d:\github\potart\include\windowmanager.h
 	"GL/glew.h"
@@ -28,5 +28,13 @@
 
 1402602033 source:d:\github\potart\src\windowmanager.cpp
 	"WindowManager.h"
+	<iostream>
+
+1402690757 d:\github\potart\include\window.h
+	"GL/glew.h"
+	"GLFW/glfw3.h"
+
+1402690870 source:d:\github\potart\src\window.cpp
+	"Window.h"
 	<iostream>
 

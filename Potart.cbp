@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -32,8 +33,8 @@
 			<Add library="gdi32" />
 			<Add directory="lib" />
 		</Linker>
-		<Unit filename="include/WindowManager.h" />
-		<Unit filename="src/WindowManager.cpp" />
+		<Unit filename="include/Window.h" />
+		<Unit filename="src/Window.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
