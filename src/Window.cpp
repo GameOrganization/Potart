@@ -10,6 +10,14 @@ struct res {
     int h;
 } resolution = {0, 0};
 
+//Data structure to count fps and frame time
+struct fc {
+    int frames;
+    double time;
+    int fps;
+    double prev, curr;
+} fps = {0, 0.0, 0, 0.0, 0.0};
+
 //Callback function to display error codes and descriptions from GLFW
 static void error(int error, const char* description) {
     std::cerr << "Error " << error << ": " << description << std::endl;
@@ -45,7 +53,10 @@ int Window::create() {
 
     //Attempt to initialize GLEW, if an error occurred, return null
     if (glewInit() != GLEW_OK)
-        return NULL;
+        return 1;
+
+    //Initialize the fps counter
+    fps.curr = glfwGetTime();
 
     //Return 0 since no error occurred
     return 0;
@@ -77,4 +88,23 @@ bool Window::isOpen() {
 void Window::update() {
     glfwSwapBuffers(ptr);
     glfwPollEvents();
+
+    fps.prev = fps.curr;
+    fps.curr = glfwGetTime();
+    fps.frames++;
+    fps.time += (fps.curr - fps.prev);
+    if (fps.time >= 1.0) {
+        fps.fps = fps.frames;
+        fps.frames = 0;
+        fps.time -= 1.0;
+        std::cout << fps.fps << "fps" << std::endl;
+    }
+}
+
+double Window::getFrameTime() {
+    return (fps.curr - fps.prev);
+}
+
+int Window::getFPS() {
+    return fps.fps;
 }

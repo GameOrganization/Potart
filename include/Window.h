@@ -31,6 +31,8 @@ int height();
 //Utility functions for game loop
 bool isOpen();
 void update();
+double getFrameTime();
+int getFPS();
 
 } //namespace Window
 
