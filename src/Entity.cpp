@@ -1,10 +1,13 @@
 #include "Entity.h"
 
-Entity::Entity() : pos(), body(NULL) {
+Entity::Entity() : pos(), body(NULL){
+    name = "UNNAMED";
+    type=Type(OTHER);
     //currAnm = animations[0];
 }
 
-Entity::Entity(Vec2f pos0, b2Body* body0) : pos(pos0), body(body0) {
+Entity::Entity(std::string n, Vec2f pos0, b2Body* body0, Type t) : pos(pos0), body(body0) {
+    type = t;
     //currAnm = animations[0];
 }
 
@@ -28,4 +31,16 @@ void Entity::setPos(float x, float y) {
 
 Vec2f Entity::getPos() {
     return pos;
+}
+
+Type Entity::getType(){
+    return type;
+}
+
+std::string Entity::getName(){
+    return name;
+}
+
+void Entity::setName(std::string n){
+    name = n;
 }

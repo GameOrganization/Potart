@@ -20,7 +20,7 @@ b2Body* Physics::createDynamicBox(float cx, float cy, float w, float h, float de
     b2FixtureDef fixture;
     fixture.shape = &shape;
     fixture.density = density;
-    fixture.friction = 0.0f;
+    //fixture.friction = 0.8f;
     body->CreateFixture(&fixture);
     return body;
 }
