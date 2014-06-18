@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1402711645 source:d:\github\potart\src\main.cpp
+1402715786 source:d:\github\potart\src\main.cpp
 	<iostream>
 	"Window.h"
 	"Physics.h"
@@ -40,7 +40,7 @@
 	"Window.h"
 	<iostream>
 
-1402710182 source:d:\github\potart\src\physics.cpp
+1402800386 source:d:\github\potart\src\physics.cpp
 	"Physics.h"
 
 1402698482 d:\github\potart\include\physics.h

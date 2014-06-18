@@ -2,6 +2,9 @@
 #include "Window.h"
 #include "Physics.h"
 
+//change to 1 to enable vsync
+#define VSYNC 1
+
 void init();
 void update(float time);
 void draw();
@@ -59,7 +62,7 @@ void init() {
     glfwSetMouseButtonCallback(Window::ptr, mouseHandler);
 
     //Enable vsync so mike's computer doesn't shit itself
-    glfwSwapInterval(1);
+    glfwSwapInterval(VSYNC);
 
     w = 10.0f * (float)Window::width() / (float)Window::height();
     h = 10.0f;
