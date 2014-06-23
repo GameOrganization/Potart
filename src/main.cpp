@@ -1,4 +1,8 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <stdlib.h>
 #include "Window.h"
 #include "Physics.h"
 
@@ -11,7 +15,17 @@ void draw();
 
 b2World world(b2Vec2(0.0f, -9.8f));
 b2Body* ground = Physics::createStaticBox(0.0f, 1.0f, 10.0f, 2.0f, world);
+
+//save button on the LEFT
+b2Body* saveButton = Physics::createStaticBox(-3.0f, 1.2f, 1.5f, 0.5f, world);
+
+//load button on the RIGHT
+b2Body* loadButton = Physics::createStaticBox(3.0f, 1.2f, 1.5f, 0.5f, world);
 b2Body* curr = NULL;
+
+//used for writing to a save file
+std::ofstream outfile;
+std::stringstream out;
 
 float w = 0.0f, h = 0.0f;
 
@@ -22,13 +36,65 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
 }
 
 static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
-    if (button == 0 && action == GLFW_PRESS) {
-        double mx, my;
-        glfwGetCursorPos(window, &mx, &my);
-        float x = (float)(mx - (Window::width()/2));
-        float y = (float)(Window::height() - my);
-        x *= w / Window::width();
-        y *= h / Window::height();
+    double mx, my;
+    glfwGetCursorPos(window, &mx, &my);
+    float x = (float)(mx - (Window::width()/2));
+    float y = (float)(Window::height() - my);
+    x *= w / Window::width();
+    y *= h / Window::height();
+
+    //checking if the user clicked the save button, saving current positions if so
+    if(button == 0 && action == GLFW_PRESS && x > -3.75 && x < -2.25 && y > .95 && y < 1.45){
+        std::cout << "===SAVING==="<< std::endl;
+        std::cout << "Body Count: " << world.GetBodyCount() << std::endl;
+        for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
+            //only save things above the ground
+            if(b->GetPosition().y > 2.0){
+                out << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
+            }
+        }
+        outfile.open("saveFile.txt");
+        outfile << out.str();
+        outfile.close();
+
+    //checking if the user clicked the load button, loading if so
+    }else if(button == 0 && action == GLFW_PRESS && x < 3.75 && x > 2.25 && y > .95 && y < 1.45){
+
+        //each line in the file
+        std::string line;
+
+        //the individual coordinates
+        std::string token;
+
+        //i don't know how boolean works in c++
+        int isX =1;
+
+        //checking that the file exists and loading it
+        std::ifstream infile("saveFile.txt");
+        std::cout << "===LOADING==="<< std::endl;
+        if(infile.is_open()){
+            while(getline(infile,line)){
+                std::stringstream in(line);
+
+                //assigning each individual x and y
+                while(std::getline(in,token,',')){
+                    if(isX==1){
+                        x=atof(token.c_str());
+                        isX=0;
+                    }else{
+                        y=atof(token.c_str());
+                        isX=1;
+                    }
+                }
+
+                //spawning the boxes
+                std::cout << "spawning at " << x << ", " << y << std::endl;
+                curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, world);
+                out << x << "," << y << std::endl;
+            }
+            infile.close();
+        }
+    }else if (button == 0 && action == GLFW_PRESS) {
         std::cout << "spawning at " << x << ", " << y << std::endl;
         curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, world);
     }

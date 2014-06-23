@@ -34,10 +34,12 @@
 			<Add library="gdi32" />
 			<Add directory="lib" />
 		</Linker>
+		<Unit filename="include/Character.h" />
 		<Unit filename="include/Entity.h" />
 		<Unit filename="include/Physics.h" />
 		<Unit filename="include/Vec2f.h" />
 		<Unit filename="include/Window.h" />
+		<Unit filename="src/Character.cpp" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/Physics.cpp" />
 		<Unit filename="src/Vec2f.cpp" />
