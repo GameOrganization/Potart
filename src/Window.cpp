@@ -93,10 +93,10 @@ void Window::update() {
     fps.curr = glfwGetTime();
     fps.frames++;
     fps.time += (fps.curr - fps.prev);
-    if (fps.time >= 5.0) {
+    if (fps.time >= 1.0) {
         fps.fps = fps.frames;
         fps.frames = 0;
-        fps.time -= 5.0;
+        fps.time -= 1.0;
         std::cout << fps.fps << "fps" << std::endl;
     }
 }
