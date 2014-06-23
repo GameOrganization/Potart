@@ -60,6 +60,13 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
     //checking if the user clicked the load button, loading if so
     }else if(button == 0 && action == GLFW_PRESS && x < 3.75 && x > 2.25 && y > .95 && y < 1.45){
 
+        //remove old blocks above the ground
+        for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
+            if(b->GetPosition().y > 2.0){
+                world.DestroyBody(b);
+            }
+        }
+
         //each line in the file
         std::string line;
 
