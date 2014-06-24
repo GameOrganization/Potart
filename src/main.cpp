@@ -21,6 +21,9 @@ b2Body* saveButton = Physics::createStaticBox(-3.0f, 1.2f, 1.5f, 0.5f, world);
 
 //load button on the RIGHT
 b2Body* loadButton = Physics::createStaticBox(3.0f, 1.2f, 1.5f, 0.5f, world);
+
+//reset button in the CENTER
+b2Body* resetButton = Physics::createStaticBox(0.0f, 1.2f, 1.5f, 0.5f, world);
 b2Body* curr = NULL;
 
 //used for writing to a save file
@@ -33,6 +36,12 @@ float w = 0.0f, h = 0.0f;
 static void keyHandler(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
+    if (key == GLFW_KEY_A && action == GLFW_PRESS)
+        std::cout<<"A KEY PRESSED"<<std::endl;
+    if (key == GLFW_KEY_B && action == GLFW_PRESS)
+        std::cout<<"D KEY PRESSED"<<std::endl;
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+        std::cout<<"SPACE KEY PRESSED"<<std::endl;
 }
 
 static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
@@ -49,13 +58,15 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
         std::cout << "Body Count: " << world.GetBodyCount() << std::endl;
         for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
             //only save things above the ground
-            if(b->GetPosition().y > 2.0){
+            if(b->GetPosition().y > 2){
                 out << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
             }
         }
         outfile.open("saveFile.txt");
+        outfile.clear();
         outfile << out.str();
         outfile.close();
+        out.clear();
 
     //checking if the user clicked the load button, loading if so
     }else if(button == 0 && action == GLFW_PRESS && x < 3.75 && x > 2.25 && y > .95 && y < 1.45){
@@ -101,6 +112,18 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
             }
             infile.close();
         }
+
+    //removing all blocks to reset
+    }else if(button == 0 && action == GLFW_PRESS && x < 0.75 && x > -0.75 && y > .95 && y < 1.45){
+        std::cout<<"REMOVING ALL BLOCKS"<<std::endl;
+        for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
+            if(b->GetPosition().y > 2.0){
+                world.DestroyBody(b);
+            }
+        }
+        out.clear();
+
+    //spawn boxes
     }else if (button == 0 && action == GLFW_PRESS) {
         std::cout << "spawning at " << x << ", " << y << std::endl;
         curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, world);
