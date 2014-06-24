@@ -54,8 +54,12 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
     //checking if the user clicked the save button, saving current positions if so
     if(button == 0 && action == GLFW_PRESS && x > -3.75 && x < -2.25 && y > .95 && y < 1.45){
+        out.str("");
         std::cout << "===SAVING==="<< std::endl;
-        std::cout << "Body Count: " << world.GetBodyCount() << std::endl;
+
+        //number of boxes, excluding the ground and buttons
+        std::cout << "Boxes: " << world.GetBodyCount()-4 << std::endl;
+
         for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
             //only save things above the ground
             if(b->GetPosition().y > 2){
@@ -63,10 +67,9 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
             }
         }
         outfile.open("saveFile.txt");
-        outfile.clear();
         outfile << out.str();
         outfile.close();
-        out.clear();
+        out.str("");
 
     //checking if the user clicked the load button, loading if so
     }else if(button == 0 && action == GLFW_PRESS && x < 3.75 && x > 2.25 && y > .95 && y < 1.45){
@@ -115,13 +118,12 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
     //removing all blocks to reset
     }else if(button == 0 && action == GLFW_PRESS && x < 0.75 && x > -0.75 && y > .95 && y < 1.45){
-        std::cout<<"REMOVING ALL BLOCKS"<<std::endl;
+        std::cout<<"===RESETTING==="<<std::endl;
         for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
             if(b->GetPosition().y > 2.0){
                 world.DestroyBody(b);
             }
         }
-        out.clear();
 
     //spawn boxes
     }else if (button == 0 && action == GLFW_PRESS) {
