@@ -44,12 +44,20 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
         glfwSetWindowShouldClose(window, GL_TRUE);
 
     //move left
-    if (key == GLFW_KEY_A && action == GLFW_PRESS && test->GetLinearVelocity().x > -5)
-        test->ApplyForceToCenter(b2Vec2(-200,test->GetLinearVelocity().y), true);
+    if (key == GLFW_KEY_A && action == GLFW_PRESS)
+        test->SetLinearVelocity(b2Vec2(-5,test->GetLinearVelocity().y));
 
     //move right
-    if (key == GLFW_KEY_D && action == GLFW_PRESS && test->GetLinearVelocity().x < 5)
-        test->ApplyForceToCenter(b2Vec2(200,test->GetLinearVelocity().y), true);
+    if (key == GLFW_KEY_D && action == GLFW_PRESS)
+        test->SetLinearVelocity(b2Vec2(5,test->GetLinearVelocity().y));
+
+    //move left
+    if (key == GLFW_KEY_A && action == GLFW_RELEASE)
+        test->SetLinearVelocity(b2Vec2(0,test->GetLinearVelocity().y));
+
+    //move right
+    if (key == GLFW_KEY_D && action == GLFW_RELEASE)
+        test->SetLinearVelocity(b2Vec2(0,test->GetLinearVelocity().y));
 
     //stop horizontal movement, maintain vertical
     if (key == GLFW_KEY_S && action == GLFW_PRESS)
