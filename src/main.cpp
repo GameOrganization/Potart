@@ -16,7 +16,7 @@ void draw();
 b2World world(b2Vec2(0.0f, -9.8f));
 
 //user controlled block
-b2Body* test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, world);
+b2Body* test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
 
 b2Body* ground = Physics::createStaticBox(0.0f, 1.0f, 10.0f, 2.0f, world);
 
@@ -147,7 +147,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
                 if(isTest==1){
                     std::cout << "spawning test at " << x << ", " << y << std::endl;
                     world.DestroyBody(test);
-                    test = Physics::createDynamicBox(x, y, 0.5f, 1.0f, 1.0f, world);
+                    test = Physics::createDynamicBox(x, y, 0.5f, 1.0f, 1.0f, 0.0f, world);
                     test -> SetFixedRotation(true);
                     test -> SetUserData(test);
                     isTest = 0;
@@ -155,7 +155,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
                 //loading the boxes
                 }else{
                     std::cout << "spawning at " << x << ", " << y << std::endl;
-                    curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, world);
+                    curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, 0.8f, world);
                     out << x << "," << y << std::endl;
                 }
             }
@@ -172,14 +172,14 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
         }
 
         //reset test
-        test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, world);
+        test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
         test -> SetFixedRotation(true);
         test -> SetUserData(test);
 
     //spawn boxes
     }else if (button == 0 && action == GLFW_PRESS) {
         std::cout << "spawning at " << x << ", " << y << std::endl;
-        curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, world);
+        curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, 0.8f, world);
     }
 }
 
@@ -233,17 +233,13 @@ void init() {
 void update(float time) {
     world.Step(time, 8, 3);
 
-    //if the test falls off the ground, respawn
-    if(test->GetWorldCenter().y < -1.0f){
+    //if the test leaves the bottom or sides of the screen, respawn
+    if(test->GetWorldCenter().y < -1.0f || test->GetWorldCenter().x < -w/2 || test->GetWorldCenter().x > w/2){
         std::cout << "Test fell: resetting test" << std::endl;
         world.DestroyBody(test);
-        test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, world);
+        test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
         test -> SetFixedRotation(true);
         test -> SetUserData(test);
-
-    //test bounces off the sides of the screen
-    }else if(test->GetWorldCenter().x < -6.0f || test->GetWorldCenter().x > 6.0f){
-        test->SetLinearVelocity(b2Vec2(test->GetLinearVelocity().x*-1, test->GetLinearVelocity().y));
     }
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext()) {
         if (body->GetWorldCenter().y < -10.0f) {

@@ -10,7 +10,7 @@ b2Body* Physics::createStaticBox(float cx, float cy, float w, float h, b2World &
     return body;
 }
 
-b2Body* Physics::createDynamicBox(float cx, float cy, float w, float h, float density, b2World &world) {
+b2Body* Physics::createDynamicBox(float cx, float cy, float w, float h, float density, float fric, b2World &world) {
     b2BodyDef def;
     def.type = b2_dynamicBody;
     def.position.Set(cx, cy);
@@ -20,7 +20,7 @@ b2Body* Physics::createDynamicBox(float cx, float cy, float w, float h, float de
     b2FixtureDef fixture;
     fixture.shape = &shape;
     fixture.density = density;
-    //fixture.friction = 0.8f;
+    fixture.friction = fric;
     body->CreateFixture(&fixture);
     return body;
 }

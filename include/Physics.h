@@ -9,7 +9,7 @@ namespace Physics {
 
 b2Body* createStaticBox(float cx, float cy, float w, float h, b2World &world);
 
-b2Body* createDynamicBox(float cx, float cy, float w, float h, float density, b2World &world);
+b2Body* createDynamicBox(float cx, float cy, float w, float h, float density, float fric, b2World &world);
 
 } //namespace Physics
 
