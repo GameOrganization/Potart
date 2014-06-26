@@ -51,11 +51,11 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
     if (key == GLFW_KEY_D && action == GLFW_PRESS)
         test->SetLinearVelocity(b2Vec2(5,test->GetLinearVelocity().y));
 
-    //move left
+    //stop left
     if (key == GLFW_KEY_A && action == GLFW_RELEASE)
         test->SetLinearVelocity(b2Vec2(0,test->GetLinearVelocity().y));
 
-    //move right
+    //stop right
     if (key == GLFW_KEY_D && action == GLFW_RELEASE)
         test->SetLinearVelocity(b2Vec2(0,test->GetLinearVelocity().y));
 
@@ -90,7 +90,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
             //only save things above the ground
             if(b->GetPosition().y > 2 && b->GetUserData() != test){
                 out << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
-            }else if(b->GetPosition().y > 2 && b->GetUserData() == test){
+            }else if(b->GetUserData() == test){
                 out << "TEST" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
             }
         }
@@ -155,7 +155,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
                 //loading the boxes
                 }else{
                     std::cout << "spawning at " << x << ", " << y << std::endl;
-                    curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, 0.8f, world);
+                    curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, 1.0f, world);
                     out << x << "," << y << std::endl;
                 }
             }
@@ -179,7 +179,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
     //spawn boxes
     }else if (button == 0 && action == GLFW_PRESS) {
         std::cout << "spawning at " << x << ", " << y << std::endl;
-        curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, 0.8f, world);
+        curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, 1.0f, world);
     }
 }
 
@@ -224,7 +224,6 @@ void init() {
     glViewport(0, 0, Window::width(), Window::height());
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    float x = 5.0f * (float)Window::width() / (float)Window::height();
     glOrtho(-w/2, w/2, 0.0f, h, -1.0f, 1.0f);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -235,7 +234,7 @@ void update(float time) {
 
     //if the test leaves the bottom or sides of the screen, respawn
     if(test->GetWorldCenter().y < -1.0f || test->GetWorldCenter().x < -w/2 || test->GetWorldCenter().x > w/2){
-        std::cout << "Test fell: resetting test" << std::endl;
+        std::cout << "Test left the screen: resetting" << std::endl;
         world.DestroyBody(test);
         test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
         test -> SetFixedRotation(true);
@@ -271,8 +270,14 @@ void draw() {
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.5f, 0.5f, 0.5f);
     drawBody(ground);
+    glColor3f(1.0f, 0.8f, 0.6f);
+    drawBody(test);
+    glColor3f(0.5f, 0.8f, 1.0f);
+    drawBody(saveButton);
+    drawBody(resetButton);
+    drawBody(loadButton);
     glColor3f(1.0f, 1.0f, 1.0f);
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext())
-        if (body != ground)
+        if (body!=ground&&body!=test&&body!=saveButton&&body!=resetButton&&body!=loadButton)
             drawBody(body);
 }

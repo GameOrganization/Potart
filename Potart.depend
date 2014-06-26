@@ -208,18 +208,18 @@
 1382546500 d:\github\potart\include\box2d\dynamics\joints\b2wheeljoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614506 source:c:\users\mike\documents\github\potart\src\entity.cpp
+1403717734 source:c:\users\mike\documents\github\potart\src\entity.cpp
 	"Entity.h"
 
-1403698071 c:\users\mike\documents\github\potart\include\entity.h
+1403717733 c:\users\mike\documents\github\potart\include\entity.h
 	"Vec2f.h"
 	"Box2D/Box2D.h"
 	<string>
 
-1403614505 c:\users\mike\documents\github\potart\include\vec2f.h
+1403717733 c:\users\mike\documents\github\potart\include\vec2f.h
 	<iostream>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\box2d.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\box2d.h
 	<Box2D/Common/b2Settings.h>
 	<Box2D/Common/b2Draw.h>
 	<Box2D/Common/b2Timer.h>
@@ -249,83 +249,83 @@
 	<Box2D/Dynamics/Joints/b2WeldJoint.h>
 	<Box2D/Dynamics/Joints/b2WheelJoint.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\common\b2settings.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\common\b2settings.h
 	<stddef.h>
 	<assert.h>
 	<float.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\common\b2draw.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\common\b2draw.h
 	<Box2D/Common/b2Math.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\common\b2math.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\common\b2math.h
 	<Box2D/Common/b2Settings.h>
 	<math.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\common\b2timer.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\common\b2timer.h
 	<Box2D/Common/b2Settings.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2circleshape.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2circleshape.h
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2shape.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2shape.h
 	<Box2D/Common/b2BlockAllocator.h>
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Collision.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\common\b2blockallocator.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\common\b2blockallocator.h
 	<Box2D/Common/b2Settings.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\b2collision.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\b2collision.h
 	<Box2D/Common/b2Math.h>
 	<limits.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2edgeshape.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2edgeshape.h
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2chainshape.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2chainshape.h
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2polygonshape.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\shapes\b2polygonshape.h
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\b2broadphase.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\b2broadphase.h
 	<Box2D/Common/b2Settings.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/b2DynamicTree.h>
 	<algorithm>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\b2dynamictree.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\b2dynamictree.h
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Common/b2GrowableStack.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\common\b2growablestack.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\common\b2growablestack.h
 	<Box2D/Common/b2Settings.h>
 	<memory.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\b2distance.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\b2distance.h
 	<Box2D/Common/b2Math.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\collision\b2timeofimpact.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\collision\b2timeofimpact.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Distance.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2body.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2body.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
 	<memory>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2fixture.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2fixture.h
 	<Box2D/Dynamics/b2Body.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2worldcallbacks.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2worldcallbacks.h
 	<Box2D/Common/b2Settings.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2timestep.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2timestep.h
 	<Box2D/Common/b2Math.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2world.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2world.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Common/b2BlockAllocator.h>
 	<Box2D/Common/b2StackAllocator.h>
@@ -333,55 +333,55 @@
 	<Box2D/Dynamics/b2WorldCallbacks.h>
 	<Box2D/Dynamics/b2TimeStep.h>
 
-1403614504 c:\users\mike\documents\github\potart\include\box2d\common\b2stackallocator.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\common\b2stackallocator.h
 	<Box2D/Common/b2Settings.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2contactmanager.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\b2contactmanager.h
 	<Box2D/Collision/b2BroadPhase.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\contacts\b2contact.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\contacts\b2contact.h
 	<Box2D/Common/b2Math.h>
 	<Box2D/Collision/b2Collision.h>
 	<Box2D/Collision/Shapes/b2Shape.h>
 	<Box2D/Dynamics/b2Fixture.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2distancejoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2distancejoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2joint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2joint.h
 	<Box2D/Common/b2Math.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2frictionjoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2frictionjoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2gearjoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2gearjoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2motorjoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2motorjoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2mousejoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2mousejoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2prismaticjoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2prismaticjoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2pulleyjoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2pulleyjoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2revolutejoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2revolutejoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2ropejoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2ropejoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2weldjoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2weldjoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2wheeljoint.h
+1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2wheeljoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403712085 source:c:\users\mike\documents\github\potart\src\main.cpp
+1403724717 source:c:\users\mike\documents\github\potart\src\main.cpp
 	<iostream>
 	<fstream>
 	<sstream>
@@ -390,11 +390,11 @@
 	"Window.h"
 	"Physics.h"
 
-1403614505 c:\users\mike\documents\github\potart\include\window.h
+1403717733 c:\users\mike\documents\github\potart\include\window.h
 	"GL/glew.h"
 	"GLFW/glfw3.h"
 
-1403614505 c:\users\mike\documents\github\potart\include\gl\glew.h
+1403717733 c:\users\mike\documents\github\potart\include\gl\glew.h
 	<stddef.h>
 	<inttypes.h>
 	<stdint.h>
@@ -402,7 +402,7 @@
 	<OpenGL/glu.h>
 	<GL/glu.h>
 
-1403614505 c:\users\mike\documents\github\potart\include\glfw\glfw3.h
+1403717733 c:\users\mike\documents\github\potart\include\glfw\glfw3.h
 	<stddef.h>
 	<OpenGL/gl3.h>
 	<OpenGL/gl.h>
@@ -414,23 +414,23 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1403698162 c:\users\mike\documents\github\potart\include\physics.h
+1403717733 c:\users\mike\documents\github\potart\include\physics.h
 	"Box2D/Box2D.h"
 
-1403698383 source:c:\users\mike\documents\github\potart\src\physics.cpp
+1403717734 source:c:\users\mike\documents\github\potart\src\physics.cpp
 	"Physics.h"
 
-1403614506 source:c:\users\mike\documents\github\potart\src\vec2f.cpp
+1403717734 source:c:\users\mike\documents\github\potart\src\vec2f.cpp
 	<math.h>
 	"Vec2f.h"
 
-1403614506 source:c:\users\mike\documents\github\potart\src\window.cpp
+1403717734 source:c:\users\mike\documents\github\potart\src\window.cpp
 	"Window.h"
 	<iostream>
 
-1403614506 source:c:\users\mike\documents\github\potart\src\character.cpp
+1403717734 source:c:\users\mike\documents\github\potart\src\character.cpp
 	"Character.h"
 
-1403614505 c:\users\mike\documents\github\potart\include\character.h
+1403717733 c:\users\mike\documents\github\potart\include\character.h
 	<Entity.h>
 
