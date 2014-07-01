@@ -16,7 +16,9 @@ void draw();
 b2World world(b2Vec2(0.0f, -9.8f));
 
 //user controlled block
-b2Body* test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+b2Body* test = Physics::createDynamicBox(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+
+b2Body* other = Physics::createDynamicBox(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
 
 b2Body* ground = Physics::createStaticBox(0.0f, 1.0f, 10.0f, 2.0f, world);
 
@@ -43,30 +45,56 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 
-    //move left
+    //TEST move left
     if (key == GLFW_KEY_A && action == GLFW_PRESS)
         test->SetLinearVelocity(b2Vec2(-5,test->GetLinearVelocity().y));
 
-    //move right
+    //TEST move right
     if (key == GLFW_KEY_D && action == GLFW_PRESS)
         test->SetLinearVelocity(b2Vec2(5,test->GetLinearVelocity().y));
 
-    //stop left
+    //TEST stop left
     if (key == GLFW_KEY_A && action == GLFW_RELEASE)
         test->SetLinearVelocity(b2Vec2(0,test->GetLinearVelocity().y));
 
-    //stop right
+    //TEST stop right
     if (key == GLFW_KEY_D && action == GLFW_RELEASE)
         test->SetLinearVelocity(b2Vec2(0,test->GetLinearVelocity().y));
 
-    //stop horizontal movement, maintain vertical
+    //TEST stop horizontal movement, maintain vertical
     if (key == GLFW_KEY_S && action == GLFW_PRESS)
         test->SetLinearVelocity(b2Vec2(0,test->GetLinearVelocity().y));
 
-    //jump
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+    //TEST jump
+    if (key == GLFW_KEY_W && action == GLFW_PRESS)
         if(test->GetLinearVelocity().y < 0.1 && test->GetLinearVelocity().y > -0.1){
             test->SetLinearVelocity(b2Vec2(test->GetLinearVelocity().x,5));
+        }
+
+    //OTHER move left
+    if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+        other->SetLinearVelocity(b2Vec2(-5,other->GetLinearVelocity().y));
+
+    //OTHER move right
+    if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+        other->SetLinearVelocity(b2Vec2(5,other->GetLinearVelocity().y));
+
+    //OTHER stop left
+    if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
+        other->SetLinearVelocity(b2Vec2(0,other->GetLinearVelocity().y));
+
+    //OTHER stop right
+    if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
+        other->SetLinearVelocity(b2Vec2(0,other->GetLinearVelocity().y));
+
+    //OTHER stop horizontal movement, maintain vertical
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+        other->SetLinearVelocity(b2Vec2(0,other->GetLinearVelocity().y));
+
+    //OTHER jump
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+        if(other->GetLinearVelocity().y < 0.1 && other->GetLinearVelocity().y > -0.1){
+            other->SetLinearVelocity(b2Vec2(other->GetLinearVelocity().x,5));
         }
 }
 
@@ -88,10 +116,12 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
         for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
             //only save things above the ground
-            if(b->GetPosition().y > 2 && b->GetUserData() != test){
+            if(b->GetPosition().y > 2 && b->GetUserData() != test && b->GetUserData() != other){
                 out << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
             }else if(b->GetUserData() == test){
                 out << "TEST" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
+            }else if(b->GetUserData() == other){
+                out << "OTHER" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
             }
         }
         outfile.open("saveFile.txt");
@@ -104,7 +134,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
         //remove old blocks above the ground
         for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
-            if(b->GetPosition().y > 2.0 && b != test){
+            if(b->GetPosition().y > 2.0 && b != test && b != other){
                 world.DestroyBody(b);
             }
         }
@@ -120,6 +150,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
         //still don't know how boolean works
         int isTest = 0;
+        int isOther = 0;
 
         //checking that the file exists and loading it
         std::ifstream infile("saveFile.txt");
@@ -133,6 +164,10 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
                     if(token.substr(0, 4)=="TEST"){
                         isTest = 1;
                         token = token.substr(4,token.length());
+                    }
+                    if(token.substr(0, 5)=="OTHER"){
+                        isOther = 1;
+                        token = token.substr(5,token.length());
                     }
                     if(isX==1){
                         x=atof(token.c_str());
@@ -151,6 +186,15 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
                     test -> SetFixedRotation(true);
                     test -> SetUserData(test);
                     isTest = 0;
+
+                //loading other
+                }else if(isOther==1){
+                    std::cout << "spawning other at " << x << ", " << y << std::endl;
+                    world.DestroyBody(other);
+                    other = Physics::createDynamicBox(x, y, 0.5f, 1.0f, 1.0f, 0.0f, world);
+                    other -> SetFixedRotation(true);
+                    other -> SetUserData(other);
+                    isOther = 0;
 
                 //loading the boxes
                 }else{
@@ -172,9 +216,14 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
         }
 
         //reset test
-        test = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+        test = Physics::createDynamicBox(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
         test -> SetFixedRotation(true);
         test -> SetUserData(test);
+
+        //reset other
+        other = Physics::createDynamicBox(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+        other -> SetFixedRotation(true);
+        other -> SetUserData(other);
 
     //spawn boxes
     }else if (button == 0 && action == GLFW_PRESS) {
@@ -187,6 +236,9 @@ int main(int argc, char *argv[]) {
 
     test->SetFixedRotation(true);
     test->SetUserData(test);
+
+    other->SetFixedRotation(true);
+    other->SetUserData(other);
 
     //Attempt to create window
     if (Window::create()) {
@@ -240,6 +292,16 @@ void update(float time) {
         test -> SetFixedRotation(true);
         test -> SetUserData(test);
     }
+
+    //if the other leaves the bottom or sides of the screen, respawn
+    if(other->GetWorldCenter().y < -1.0f || other->GetWorldCenter().x < -w/2 || other->GetWorldCenter().x > w/2){
+        std::cout << "Other left the screen: resetting" << std::endl;
+        world.DestroyBody(other);
+        other = Physics::createDynamicBox(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+        other -> SetFixedRotation(true);
+        other -> SetUserData(other);
+    }
+
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext()) {
         if (body->GetWorldCenter().y < -10.0f) {
             b2Body* toDestroy = body;
@@ -272,12 +334,14 @@ void draw() {
     drawBody(ground);
     glColor3f(1.0f, 0.8f, 0.6f);
     drawBody(test);
+    glColor3f(0.6f, 0.8f, 1.0f);
+    drawBody(other);
     glColor3f(0.5f, 0.8f, 1.0f);
     drawBody(saveButton);
     drawBody(resetButton);
     drawBody(loadButton);
     glColor3f(1.0f, 1.0f, 1.0f);
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext())
-        if (body!=ground&&body!=test&&body!=saveButton&&body!=resetButton&&body!=loadButton)
+        if (body!=ground&&body!=test&&body!=other&&body!=saveButton&&body!=resetButton&&body!=loadButton)
             drawBody(body);
 }
