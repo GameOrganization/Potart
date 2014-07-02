@@ -56,7 +56,7 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
         }else if(control==1){
             other->SetLinearVelocity(b2Vec2(-5,other->GetLinearVelocity().y));
         }else{
-            testChar.getBody()->SetLinearVelocity(b2Vec2(-5,testChar.getBody()->GetLinearVelocity().y));
+            testChar.moveLeft();
         }
 
     //move right
@@ -66,7 +66,7 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
         }else if(control==1){
             other->SetLinearVelocity(b2Vec2(5,other->GetLinearVelocity().y));
         }else{
-            testChar.getBody()->SetLinearVelocity(b2Vec2(5,testChar.getBody()->GetLinearVelocity().y));
+            testChar.moveRight();
         }
 
     //stop moving
@@ -76,7 +76,7 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
         }else if(control==1){
             other->SetLinearVelocity(b2Vec2(0,other->GetLinearVelocity().y));
         }else{
-            testChar.getBody()->SetLinearVelocity(b2Vec2(0,testChar.getBody()->GetLinearVelocity().y));
+            testChar.stop();
         }
 
     //jump
@@ -88,8 +88,8 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
             if(other->GetLinearVelocity().y < 0.1 && other->GetLinearVelocity().y > -0.1){
                 other->SetLinearVelocity(b2Vec2(other->GetLinearVelocity().x,5));}}
         else{
-            if(testChar.getBody()->GetLinearVelocity().y < 0.1 && testChar.getBody()->GetLinearVelocity().y > -0.1){
-                testChar.getBody()->SetLinearVelocity(b2Vec2(testChar.getBody()->GetLinearVelocity().x,5));}}
+            testChar.jump();
+        }
 
     //cycle which block you're controlling
     if (key == GLFW_KEY_W && action == GLFW_PRESS)
@@ -123,7 +123,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
             }else if(b == other){
                 out << "OTHER" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
             }else if(b == testChar.getBody()){
-                out << "CHAR" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
+                out << "TESTCHAR" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
             }
         }
         outfile.open("saveFile.txt");
@@ -164,17 +164,17 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
                 //assigning each individual x and y
                 while(std::getline(in,token,',')){
-                    if(token.substr(0, 4)=="TEST"){
+                    if(token.substr(0, 8)=="TESTCHAR"){
+                        isTestChar = 1;
+                        token = token.substr(8,token.length());
+                    }
+                    else if(token.substr(0, 4)=="TEST"){
                         isTest = 1;
                         token = token.substr(4,token.length());
                     }
-                    if(token.substr(0, 5)=="OTHER"){
+                    else if(token.substr(0, 5)=="OTHER"){
                         isOther = 1;
                         token = token.substr(5,token.length());
-                    }
-                    if(token.substr(0, 4)=="CHAR"){
-                        isTestChar = 1;
-                        token = token.substr(4,token.length());
                     }
                     if(isX==1){
                         x=atof(token.c_str());

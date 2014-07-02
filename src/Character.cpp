@@ -6,8 +6,21 @@ Character::~Character() {
 }
 
 void Character::jump(){
-    //Vec2f j = Vec2f(0, 20);
-    setVelocity(velocity+Vec2f(0,20));
+    if(Entity::getBody()->GetLinearVelocity().y < 0.1 && Entity::getBody()->GetLinearVelocity().y > -0.1){
+        Entity::getBody()->SetLinearVelocity(b2Vec2(Entity::getBody()->GetLinearVelocity().x,5));
+    }
+}
+
+void Character::moveLeft(){
+    Entity::getBody()->SetLinearVelocity(b2Vec2(-5,Entity::getBody()->GetLinearVelocity().y));
+}
+
+void Character::moveRight(){
+    Entity::getBody()->SetLinearVelocity(b2Vec2(5,Entity::getBody()->GetLinearVelocity().y));
+}
+
+void Character::stop(){
+    Entity::getBody()->SetLinearVelocity(b2Vec2(0,Entity::getBody()->GetLinearVelocity().y));
 }
 
 void Character::use(){

@@ -20,6 +20,11 @@ class Character : public Entity{
         //assuming all characters jump in the same arch
         void jump();
 
+        //for all your basic movement needs
+        void moveLeft();
+        void moveRight();
+        void stop();
+
         //virtual since every character could interact differently with other entities
         virtual void use();
         virtual void use(Entity e);
