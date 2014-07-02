@@ -18,9 +18,9 @@ void draw();
 b2World world(b2Vec2(0.0f, -9.8f));
 
 //user controlled blocks
-b2Body* test = Physics::createDynamicBox(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-b2Body* other = Physics::createDynamicBox(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-Character testChar = Character("TestChar", Vec2f(-1.0f, 0.0f), test, OTHER);
+Character testRed = Character("testRed", Vec2f(-1.0f, 2.5f), NULL, OTHER);
+Character testGreen = Character("testGreen", Vec2f(-1.0f, 2.5f), NULL, OTHER);
+Character testBlue = Character("testBlue", Vec2f(-1.0f, 2.5f), NULL, OTHER);
 
 b2Body* ground = Physics::createStaticBox(0.0f, 1.0f, 10.0f, 2.0f, world);
 
@@ -50,52 +50,54 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
         glfwSetWindowShouldClose(window, GL_TRUE);
 
     //move left
-    if (key == GLFW_KEY_A && action == GLFW_PRESS)
+    if (key == GLFW_KEY_A && action == GLFW_PRESS){
         if(control==0){
-            test->SetLinearVelocity(b2Vec2(-5,test->GetLinearVelocity().y));
+            testRed.moveLeft();
         }else if(control==1){
-            other->SetLinearVelocity(b2Vec2(-5,other->GetLinearVelocity().y));
+            testGreen.moveLeft();
         }else{
-            testChar.moveLeft();
+            testBlue.moveLeft();
         }
+    }
 
     //move right
-    if (key == GLFW_KEY_D && action == GLFW_PRESS)
+    if (key == GLFW_KEY_D && action == GLFW_PRESS){
         if(control==0){
-            test->SetLinearVelocity(b2Vec2(5,test->GetLinearVelocity().y));
+            testRed.moveRight();
         }else if(control==1){
-            other->SetLinearVelocity(b2Vec2(5,other->GetLinearVelocity().y));
+            testGreen.moveRight();
         }else{
-            testChar.moveRight();
+            testBlue.moveRight();
         }
+    }
 
     //stop moving
-    if ((key == GLFW_KEY_A || key == GLFW_KEY_D) && action == GLFW_RELEASE)
+    if ((key == GLFW_KEY_A || key == GLFW_KEY_D) && action == GLFW_RELEASE){
         if(control==0){
-            test->SetLinearVelocity(b2Vec2(0,test->GetLinearVelocity().y));
+            testRed.stop();
         }else if(control==1){
-            other->SetLinearVelocity(b2Vec2(0,other->GetLinearVelocity().y));
+            testGreen.stop();
         }else{
-            testChar.stop();
+            testBlue.stop();
         }
+    }
 
     //jump
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
-        if(control == 0){
-            if(test->GetLinearVelocity().y < 0.1 && test->GetLinearVelocity().y > -0.1){
-                test->SetLinearVelocity(b2Vec2(test->GetLinearVelocity().x,5));}}
-        else if(control == 1){
-            if(other->GetLinearVelocity().y < 0.1 && other->GetLinearVelocity().y > -0.1){
-                other->SetLinearVelocity(b2Vec2(other->GetLinearVelocity().x,5));}}
-        else{
-            testChar.jump();
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS){
+        if(control==0){
+            testRed.jump();
+        }else if(control==1){
+            testGreen.jump();
+        }else{
+            testBlue.jump();
         }
+    }
 
     //cycle which block you're controlling
-    if (key == GLFW_KEY_W && action == GLFW_PRESS)
-        control++;
-    if (key == GLFW_KEY_S && action == GLFW_PRESS)
-        control--;
+    if (key == GLFW_KEY_W && action == GLFW_PRESS){
+        control++;}
+    if (key == GLFW_KEY_S && action == GLFW_PRESS){
+        control--;}
 }
 
 static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
@@ -116,14 +118,14 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
         for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
             //only save things above the ground
-            if(b->GetPosition().y > 2 && b != test && b != other && b!=testChar.getBody()){
+            if(b->GetPosition().y > 2 && b != testRed.getBody() && b != testGreen.getBody() && b!=testBlue.getBody()){
                 out << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
-            }else if(b == test){
-                out << "TEST" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
-            }else if(b == other){
-                out << "OTHER" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
-            }else if(b == testChar.getBody()){
-                out << "TESTCHAR" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
+            }else if(b == testRed.getBody()){
+                out << "R" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
+            }else if(b == testGreen.getBody()){
+                out << "G" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
+            }else if(b == testBlue.getBody()){
+                out << "B" << b->GetPosition().x << "," << b->GetPosition().y << std::endl;
             }
         }
         outfile.open("saveFile.txt");
@@ -136,7 +138,7 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
         //remove old blocks above the ground
         for(b2Body *b = world.GetBodyList(); b != NULL; b = b->GetNext()){
-            if(b->GetPosition().y > 2.0 && b != test && b != other){
+            if(b->GetPosition().y > 2.0){
                 world.DestroyBody(b);
             }
         }
@@ -151,9 +153,9 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
         int isX = 1;
 
         //still don't know how boolean works
-        int isTest = 0;
-        int isOther = 0;
-        int isTestChar = 0;
+        int loadTestRed = 0;
+        int loadTestGreen = 0;
+        int loadTestBlue = 0;
 
         //checking that the file exists and loading it
         std::ifstream infile("saveFile.txt");
@@ -164,17 +166,17 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
                 //assigning each individual x and y
                 while(std::getline(in,token,',')){
-                    if(token.substr(0, 8)=="TESTCHAR"){
-                        isTestChar = 1;
-                        token = token.substr(8,token.length());
+                    if(token.substr(0, 1)=="R"){
+                        loadTestRed = 1;
+                        token = token.substr(1,token.length());
                     }
-                    else if(token.substr(0, 4)=="TEST"){
-                        isTest = 1;
-                        token = token.substr(4,token.length());
+                    else if(token.substr(0, 1)=="G"){
+                        loadTestGreen = 1;
+                        token = token.substr(1,token.length());
                     }
-                    else if(token.substr(0, 5)=="OTHER"){
-                        isOther = 1;
-                        token = token.substr(5,token.length());
+                    else if(token.substr(0, 1)=="B"){
+                        loadTestBlue = 1;
+                        token = token.substr(1,token.length());
                     }
                     if(isX==1){
                         x=atof(token.c_str());
@@ -185,31 +187,27 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
                     }
                 }
 
-                //loading test
-                if(isTest==1){
-                    std::cout << "spawning test at " << x << ", " << y << std::endl;
-                    world.DestroyBody(test);
-                    test = Physics::createDynamicBox(x, y, 0.5f, 1.0f, 1.0f, 0.0f, world);
-                    test -> SetFixedRotation(true);
-                    isTest = 0;
+                //loading red
+                if(loadTestRed==1){
+                    std::cout << "Loading RED at " << x << ", " << y << std::endl;
+                    testRed.reset(x, y, 0.5f, 1.0f, 1.0f, 0.0f, world);
+                    loadTestRed = 0;
 
-                //loading other
-                }else if(isOther==1){
-                    std::cout << "spawning other at " << x << ", " << y << std::endl;
-                    world.DestroyBody(other);
-                    other = Physics::createDynamicBox(x, y, 0.5f, 1.0f, 1.0f, 0.0f, world);
-                    other -> SetFixedRotation(true);
-                    isOther = 0;
+                //loading green
+                }else if(loadTestGreen==1){
+                    std::cout << "Loading GREEN at " << x << ", " << y << std::endl;
+                    testGreen.reset(x, y, 0.5f, 1.0f, 1.0f, 0.0f, world);
+                    loadTestGreen = 0;
 
-                //loading testChar
-                }else if(isTestChar==1){
-                    std::cout << "spawning testChar at " << x << ", " << y << std::endl;
-                    testChar.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-                    isTestChar=0;
+                //loading blue
+                }else if(loadTestBlue==1){
+                    std::cout << "Loading BLUE at " << x << ", " << y << std::endl;
+                    testBlue.reset(x, y, 0.5f, 1.0f, 1.0f, 0.0f, world);
+                    loadTestBlue=0;
 
                 //loading everything else
                 }else{
-                    std::cout << "spawning at " << x << ", " << y << std::endl;
+                    std::cout << "Spawning at " << x << ", " << y << std::endl;
                     curr = Physics::createDynamicBox(x, y, 0.5f, 0.5f, 1.0f, 1.0f, world);
                     out << x << "," << y << std::endl;
                 }
@@ -226,16 +224,14 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
             }
         }
 
-        //reset test
-        test = Physics::createDynamicBox(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-        test -> SetFixedRotation(true);
+        //reset red
+        testRed.reset(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
 
-        //reset other
-        other = Physics::createDynamicBox(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-        other -> SetFixedRotation(true);
+        //reset green
+        testGreen.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
 
-        //reset testChar
-        testChar.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+        //reset blue
+        testBlue.reset(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
 
     //spawn boxes
     }else if (button == 0 && action == GLFW_PRESS) {
@@ -246,11 +242,9 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
 int main(int argc, char *argv[]) {
 
-    test->SetFixedRotation(true);
-
-    other->SetFixedRotation(true);
-
-    testChar.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+    testRed.reset(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+    testGreen.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+    testBlue.reset(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
 
     //Attempt to create window
     if (Window::create()) {
@@ -302,29 +296,22 @@ void update(float time) {
         control = 2;
     }
 
-    //if the test leaves the bottom or sides of the screen, respawn
-    if(test->GetWorldCenter().y < -1.0f || test->GetWorldCenter().x < -w/2 || test->GetWorldCenter().x > w/2){
-        std::cout << "Test left the screen: resetting" << std::endl;
-        world.DestroyBody(test);
-        test = Physics::createDynamicBox(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-        test -> SetFixedRotation(true);
-        //test -> SetUserData(test);
+    if(testRed.getBody()->GetWorldCenter().y<-1.0f||testRed.getBody()->GetWorldCenter().x<-w/2||testRed.getBody()->GetWorldCenter().x > w/2){
+        std::cout << "RED left the screen: resetting" << std::endl;
+        world.DestroyBody(testRed.getBody());
+        testRed.reset(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
     }
 
-    //if the other leaves the bottom or sides of the screen, respawn
-    if(other->GetWorldCenter().y < -1.0f || other->GetWorldCenter().x < -w/2 || other->GetWorldCenter().x > w/2){
-        std::cout << "Other left the screen: resetting" << std::endl;
-        world.DestroyBody(other);
-        other = Physics::createDynamicBox(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-        other -> SetFixedRotation(true);
-        //other -> SetUserData(other);
+    if(testGreen.getBody()->GetWorldCenter().y<-1.0f||testGreen.getBody()->GetWorldCenter().x<-w/2||testGreen.getBody()->GetWorldCenter().x > w/2){
+        std::cout << "GREEN left the screen: resetting" << std::endl;
+        world.DestroyBody(testGreen.getBody());
+        testGreen.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
     }
 
-    if(testChar.getBody()->GetWorldCenter().y<-1.0f||testChar.getBody()->GetWorldCenter().x<-w/2||testChar.getBody()->GetWorldCenter().x > w/2){
-        std::cout << "TestChar left the screen: resetting" << std::endl;
-        world.DestroyBody(testChar.getBody());
-        testChar.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-        //other -> SetUserData(other);
+    if(testBlue.getBody()->GetWorldCenter().y<-1.0f||testBlue.getBody()->GetWorldCenter().x<-w/2||testBlue.getBody()->GetWorldCenter().x > w/2){
+        std::cout << "BLUE left the screen: resetting" << std::endl;
+        world.DestroyBody(testBlue.getBody());
+        testBlue.reset(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
     }
 
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext()) {
@@ -358,17 +345,17 @@ void draw() {
     glColor3f(0.5f, 0.5f, 0.5f);
     drawBody(ground);
     glColor3f(1.0f, 0.6f, 0.6f);
-    drawBody(test);
+    drawBody(testRed.getBody());
     glColor3f(0.6f, 0.6f, 1.0f);
-    drawBody(other);
+    drawBody(testGreen.getBody());
     glColor3f(0.6f, 1.0f, 0.6f);
-    drawBody(testChar.getBody());
+    drawBody(testBlue.getBody());
     glColor3f(0.5f, 0.8f, 1.0f);
     drawBody(saveButton);
     drawBody(resetButton);
     drawBody(loadButton);
     glColor3f(1.0f, 1.0f, 1.0f);
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext())
-        if (body!=ground&&body!=test&&body!=other&&body!=testChar.getBody()&&body!=saveButton&&body!=resetButton&&body!=loadButton)
+        if (body!=ground&&body!=testRed.getBody()&&body!=testGreen.getBody()&&body!=testBlue.getBody()&&body!=saveButton&&body!=resetButton&&body!=loadButton)
             drawBody(body);
 }
