@@ -19,8 +19,10 @@ b2World world(b2Vec2(0.0f, -9.8f));
 
 //user controlled blocks
 Character testRed = Character("testRed", Vec2f(-1.0f, 2.5f), NULL, OTHER);
-Character testGreen = Character("testGreen", Vec2f(-1.0f, 2.5f), NULL, OTHER);
-Character testBlue = Character("testBlue", Vec2f(-1.0f, 2.5f), NULL, OTHER);
+Character testGreen = Character("testGreen", Vec2f(0.0f, 2.5f), NULL, OTHER);
+Character testBlue = Character("testBlue", Vec2f(1.0f, 2.5f), NULL, OTHER);
+
+Character activeCharacter = testGreen;
 
 b2Body* ground = Physics::createStaticBox(0.0f, 1.0f, 10.0f, 2.0f, world);
 
@@ -34,7 +36,7 @@ b2Body* loadButton = Physics::createStaticBox(3.0f, 1.2f, 1.5f, 0.5f, world);
 b2Body* resetButton = Physics::createStaticBox(0.0f, 1.2f, 1.5f, 0.5f, world);
 b2Body* curr = NULL;
 
-int control = 0;
+int control = 1;
 
 //used for writing to a save file
 std::ofstream outfile;
@@ -95,9 +97,9 @@ static void keyHandler(GLFWwindow* window, int key, int scancode, int action, in
 
     //cycle which block you're controlling
     if (key == GLFW_KEY_W && action == GLFW_PRESS){
-        control++;}
-    if (key == GLFW_KEY_S && action == GLFW_PRESS){
         control--;}
+    if (key == GLFW_KEY_S && action == GLFW_PRESS){
+        control++;}
 }
 
 static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
@@ -294,6 +296,12 @@ void update(float time) {
         control = 0;
     }else if(control<0){
         control = 2;
+    }else if(control == 0){
+        activeCharacter = testRed;
+    }else if(control == 1){
+        activeCharacter = testGreen;
+    }else if(control == 2){
+        activeCharacter = testBlue;
     }
 
     if(testRed.getBody()->GetWorldCenter().y<-1.0f||testRed.getBody()->GetWorldCenter().x<-w/2||testRed.getBody()->GetWorldCenter().x > w/2){
@@ -312,6 +320,14 @@ void update(float time) {
         std::cout << "BLUE left the screen: resetting" << std::endl;
         world.DestroyBody(testBlue.getBody());
         testBlue.reset(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+    }
+
+    if(activeCharacter.getBody()->GetLinearVelocity().x<0){
+        glTranslatef(0.007,0,0);
+    }
+
+    if(activeCharacter.getBody()->GetLinearVelocity().x>0){
+        glTranslatef(-0.007,0,0);
     }
 
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext()) {
