@@ -1,5 +1,10 @@
 #include "Character.h"
 
+Character::~Character() {
+    //use some global instance of b2World
+    //world.DestroyBody(body);
+}
+
 void Character::jump(){
     //Vec2f j = Vec2f(0, 20);
     setVelocity(velocity+Vec2f(0,20));

@@ -208,10 +208,10 @@
 1382546500 d:\github\potart\include\box2d\dynamics\joints\b2wheeljoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403717734 source:c:\users\mike\documents\github\potart\src\entity.cpp
+1404308020 source:c:\users\mike\documents\github\potart\src\entity.cpp
 	"Entity.h"
 
-1403717733 c:\users\mike\documents\github\potart\include\entity.h
+1404308002 c:\users\mike\documents\github\potart\include\entity.h
 	"Vec2f.h"
 	"Box2D/Box2D.h"
 	<string>
@@ -381,7 +381,7 @@
 1403717733 c:\users\mike\documents\github\potart\include\box2d\dynamics\joints\b2wheeljoint.h
 	<Box2D/Dynamics/Joints/b2Joint.h>
 
-1403875425 source:c:\users\mike\documents\github\potart\src\main.cpp
+1404313235 source:c:\users\mike\documents\github\potart\src\main.cpp
 	<iostream>
 	<fstream>
 	<sstream>
@@ -389,6 +389,8 @@
 	<stdlib.h>
 	"Window.h"
 	"Physics.h"
+	"Character.h"
+	"Entity.h"
 
 1403717733 c:\users\mike\documents\github\potart\include\window.h
 	"GL/glew.h"
@@ -428,9 +430,9 @@
 	"Window.h"
 	<iostream>
 
-1403717734 source:c:\users\mike\documents\github\potart\src\character.cpp
+1404306831 source:c:\users\mike\documents\github\potart\src\character.cpp
 	"Character.h"
 
-1403717733 c:\users\mike\documents\github\potart\include\character.h
+1404306073 c:\users\mike\documents\github\potart\include\character.h
 	<Entity.h>
 

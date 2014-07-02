@@ -8,11 +8,13 @@
 //we can add or remove as necessary
 enum Type{BOY,GIRL,DOG,ENEMY,GROUND,WALL,OTHER};
 
-class Entity {
+class Entity{
     //current position of the body
     Vec2f pos;
     //name of the thing
     std::string name;
+    //the body
+    b2Body* body;
     //an array of the animations for this entity
     //if set to null, it is a non-animated object
 //  Animation* animations;
@@ -23,6 +25,12 @@ public:
     Entity();
     Entity(std::string n, Vec2f pos, b2Body* body, Type t);//animations (defaults to 0), angle, etc
     virtual ~Entity();
+
+    //builds the Entity as a b2Body and places it in world
+    //cx and cy are center coordinates
+    //w and h are width and height
+    //density and friction are the density and the friction you tranny
+    void reset(float cx, float cy, float w, float h, float density, float fric, b2World &world);
 
     Type type;
 
@@ -38,12 +46,9 @@ public:
     std::string getName();
     void setName(std::string n);
 
+    b2Body* getBody();
+
     //void setAnimation(int id); //possibly use string names for different animations stored in Animation class
-
-protected:
-
-    //float angle??
-    b2Body* body;
 };
 
 #endif // ENTITY_H
