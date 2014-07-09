@@ -244,10 +244,6 @@ static void mouseHandler(GLFWwindow* window, int button, int action, int mods) {
 
 int main(int argc, char *argv[]) {
 
-    testRed.reset(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-    testGreen.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-    testBlue.reset(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-
     //Attempt to create window
     if (Window::create()) {
         Window::destroy();
@@ -281,12 +277,20 @@ void init() {
     w = 10.0f * (float)Window::width() / (float)Window::height();
     h = 10.0f;
 
-    glViewport(0, 0, Window::width(), Window::height());
+    //glViewport(0.0f, 0.0f, Window::width(), Window::height());
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+    //glLoadIdentity();
     glOrtho(-w/2, w/2, 0.0f, h, -1.0f, 1.0f);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    gluLookAt(activeCharacter.getBody()->GetWorldCenter().x, activeCharacter.getBody()->GetWorldCenter().y, 1.0,
+              activeCharacter.getBody()->GetWorldCenter().x, activeCharacter.getBody()->GetWorldCenter().y, 0.0,
+              0.0, 1.0, 0.0);
+
+    //initializing the jawns
+    testRed.reset(-1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+    testGreen.reset(0.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
+    testBlue.reset(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
 }
 
 void update(float time) {
@@ -320,14 +324,6 @@ void update(float time) {
         std::cout << "BLUE left the screen: resetting" << std::endl;
         world.DestroyBody(testBlue.getBody());
         testBlue.reset(1.0f, 2.5f, 0.5f, 1.0f, 1.0f, 0.0f, world);
-    }
-
-    if(activeCharacter.getBody()->GetLinearVelocity().x<0){
-        glTranslatef(0.007,0,0);
-    }
-
-    if(activeCharacter.getBody()->GetLinearVelocity().x>0){
-        glTranslatef(-0.007,0,0);
     }
 
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext()) {
